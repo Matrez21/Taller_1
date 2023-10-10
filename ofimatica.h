@@ -5,31 +5,33 @@ using namespace std;
 class Ofimatica : public Software{
 
 private:
-    map<string, int> archivosPorUsuario;    
+    map<Usuario*, int> archivosPorUsuario;    
 
 public:
 
     Ofimatica() : Software(){}
-
-    int cantArchivos;
     
-    Ofimatica(string n,string dev,string edad, double p) : Software(n, dev, edad, p), cantArchivos(cantArchivos) {}
+    Ofimatica(string n,string dev,string edad, double p) : Software(n, dev, edad, p) {}
     
      void mostrarUsuarios() const override {
         Software::mostrarUsuarios();
     }
     
-    void agregarArchivoUsuario(string nombreUsuario) {
-        archivosPorUsuario[nombreUsuario]++;
+    void agregarArchivoUsuario(Usuario* usuario) {
+        archivosPorUsuario[usuario]++;
+    }
+    
+    void eliminarArchivoUsuario(Usuario* usuario) {
+        archivosPorUsuario[usuario]--;
     }
 
     
-    void mostrarCantArchivosUser(string nombreUsuario) const {
-        if (archivosPorUsuario.find(nombreUsuario) != archivosPorUsuario.end()) {
-            cout << nombreUsuario << " archivos en " << nombre << ": "
-                 << archivosPorUsuario.at(nombreUsuario) << endl;
+    void mostrarCantArchivosUser(Usuario* usuario) const {
+        if (archivosPorUsuario.find(usuario) != archivosPorUsuario.end()) {
+            cout << usuario -> getNombre() << " archivos en " << nombre << ": "
+                 << archivosPorUsuario.at(usuario) << endl;
         } else {
-            cout << nombreUsuario << " archivos en " << nombre <<": 0" << endl;
+            cout << usuario -> getNombre() << " archivos en " << nombre <<": 0" << endl;
         }
     }
     

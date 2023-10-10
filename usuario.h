@@ -5,7 +5,7 @@ using namespace std;
 class Usuario {
 public:
     string nombre;
-    string contraseña;
+    string contrasena;
     int edad;
     string correo;
     bool puedeAccederAlLog;
@@ -23,11 +23,11 @@ public:
         return nombre;
     }
     
-    void setContraseña(string contr){ // Contraseña
-        contraseña = contr;
+    void setContrasena(string contr){ // Contraseña
+        contrasena = contr;
     }
-    string getContraseña(){
-        return contraseña;
+    string getContrasena(){
+        return contrasena;
     }
     
     void setEdad(int age){ //Edad
@@ -53,7 +53,7 @@ public:
     
     void mostrarInformacion(){
     cout << "Nombre: " << nombre << endl;
-    cout << "Contraseña: " << contraseña << endl;
+    cout << "Contrasena: " << contrasena << endl;
     cout << "Edad: " << edad << endl;
     cout << "Correo: " << correo << endl;
     if(puedeAccederAlLog == true){
@@ -69,7 +69,7 @@ public:
 
 Usuario::Usuario(string n, string pass, int e, string c, bool logAcc){
     nombre = n;
-    contraseña = pass;
+    contrasena = pass;
     edad = e;
     correo = c;
     puedeAccederAlLog = logAcc;

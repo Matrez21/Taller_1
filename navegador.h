@@ -10,6 +10,8 @@ private:
 public:
     // Constructor
     Navegador(string n,string dev,string edad, double p) : Software(n, dev, edad, p), historialNavegacion(10) {}
+    
+    Navegador() : Software(){}
 
     // Método para agregar una página al historial de navegación
     void agregarPagina(string pagina) {
@@ -22,6 +24,16 @@ public:
     // Método para mostrar el historial de navegación
     void mostrarHistorial(){
         Software::mostrarInformacion();
+        cout << "Historial de Navegación:" << endl;
+        for (string& pagina : historialNavegacion) {
+            if (!pagina.empty()) {
+                cout << "- " << pagina << endl;
+            }
+        }
+    }
+    
+    void mostrarSoloHistorial(){
+        Software::mostrarNombre();
         cout << "Historial de Navegación:" << endl;
         for (string& pagina : historialNavegacion) {
             if (!pagina.empty()) {

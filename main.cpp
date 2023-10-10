@@ -184,11 +184,11 @@ bool login() {
     
     cout << "Ingrese nombre de usuario: ";
     cin >> nombreUsuario;
-    cout << "Ingrese contraseña: ";
-    cin >> contraseña;
+    cout << "Ingrese contrasena: ";
+    cin >> contrasena;
 
     for (auto& usuario : usuarios) {
-        if (usuario.getNombre() == nombreUsuario && usuario.getContraseña() == contraseña) {
+        if (usuario.getNombre() == nombreUsuario && usuario.getContrasena() == contrasena) {
             return true;
         }
     }
@@ -532,6 +532,15 @@ void eliminarSoftware(){
     }
 }
 
+Usuario* obtenerUsuarioPorNombre(string& nombre) {
+    for (Usuario& usuario : usuarios) {
+        if (usuario.getNombre() == nombre) {
+            return &usuario;
+        }
+    }
+    return nullptr;  
+}
+
 void mostrarInfoSoftware() {
     int opcion;
     cout << "[1]Juegos" << endl;
@@ -543,6 +552,8 @@ void mostrarInfoSoftware() {
     cout << "Que tipo de software desea ver?: " << endl;
     cin >> opcion;
     
+    Usuario* us = obtenerUsuarioPorNombre(nombreUsuario);
+    
     if(opcion == 1){
         
     for (auto& juego : juegos) {
@@ -552,7 +563,7 @@ void mostrarInfoSoftware() {
     }else if(opcion == 2){
         for (auto& ofimatica : ofimaticas) {
             ofimatica.mostrarInformacion();
-            ofimatica.mostrarCantArchivosUser(nombreUsuario);
+            ofimatica.mostrarCantArchivosUser(us);
             cout <<"---------------" <<endl;
         }
     }else if(opcion == 3){
@@ -606,17 +617,64 @@ int obtenerEdadPorNombre(string& nombre) {
     return -1;  
 }
 
-Navegador obtenerNavegadorPorIndice(){
+
+Navegador* obtenerNavegadorPorIndice(){
         int indiceNav;
         cout << "Lista de Navegadores:" << endl;
         for (int i = 0; i < navegador.size(); ++i) {
             cout <<"[" <<i + 1 << "]. " << navegador[i].getNombre() << endl;
             
         }
-        cout << "Ingrese el número del navegador que desea agregar una pagina: ";
+        cout << "Ingrese el número del navegador: ";
         cin >> indiceNav; 
         int indice = indiceNav - 1;
-    return navegador[indice];
+    return &navegador[indice];
+}
+
+Social* obtenerSocialPorIndice(){
+        int indiceSoc;
+        cout << "Lista de Softwares Sociales:" << endl;
+        for (int i = 0; i < social.size(); ++i) {
+            cout <<"[" <<i + 1 << "]. " << social[i].getNombre() << endl;
+            
+        }
+        cout << "Ingrese el número del Software social: ";
+        cin >> indiceSoc; 
+        int indice = indiceSoc - 1;
+    return &social[indice];
+}
+
+Usuario* obtenerUsuarioPorIndice(){
+        int indiceUs;
+        cout << "Lista de Usuarios:" << endl;
+        for (int i = 0; i < usuarios.size(); ++i) {
+            cout <<"[" <<i + 1 << "]. " << usuarios[i].getNombre() << endl;
+            
+        }
+        cout << "Ingrese el número del Usuario: ";
+        cin >> indiceUs; 
+        int indice = indiceUs - 1;
+    return &usuarios[indice];
+}
+
+Ofimatica* obtenerOfimaticaPorIndice(){
+        int indiceOf;
+        cout << "Lista de Ofimaticas:" << endl;
+        for (int i = 0; i < ofimaticas.size(); ++i) {
+            cout <<"[" <<i + 1 << "]. " << ofimaticas[i].getNombre() << endl;
+            
+        }
+        cout << "Ingrese el número de la Ofimatica: ";
+        cin >> indiceOf; 
+        int indice = indiceOf - 1;
+    return &ofimaticas[indice];
+}
+
+string ingresoEliminarAmigo(){
+    string nombreEliminarAmigo;
+    cout << "Ingrese el nombre del amigo que desea eliminar (Incluyendo las MAYUS del nombre): " << endl;
+    cin >> nombreEliminarAmigo;
+    return nombreEliminarAmigo;
 }
 
 bool verificarAdmin(string& nombre) {
@@ -664,20 +722,38 @@ void atributosUnicos(){
         }
         
     }else if(opcion == 2){
-        for(auto& ofim : ofimaticas){
-            ofim.mostrarCantArchivosUser(nombreUsuario);
-        }
-        int opcionAñadir;
-        cout << "[1]Si" << endl;
-        cout << "[2]No" << endl;
+
+        int opcionOfim;
+        cout << "[1]Añadir Archivos" << endl;
+        cout << "[2]Borrar Archivos" << endl;
+        cout << "[3]Mostrar Cantidad de Archivos" << endl;
+        cout << "[4]Salir" << endl;
         cout << "Desea añadir archivos?: " << endl;
-        cin >> opcionAñadir;
+        cin >> opcionOfim;
         
-    if(opcionAñadir == 1){
+        Usuario* us = obtenerUsuarioPorNombre(nombreUsuario);
         
-        //añadirArchivoUser();
+        if(opcionOfim == 1){
+            
+           Ofimatica* of = obtenerOfimaticaPorIndice();
+           
+           of -> agregarArchivoUsuario(us);
+           
+           cout << " Archivo agregado exitosamente" << endl;
         
-    }   
+        
+        }else if(opcionOfim == 2){
+            
+           Ofimatica* of = obtenerOfimaticaPorIndice();
+           
+           of -> eliminarArchivoUsuario(us);
+           
+           cout << " Archivo eliminado exitosamente" << endl;
+           
+        }else if(opcionOfim == 3){
+           Ofimatica* of = obtenerOfimaticaPorIndice();
+           of -> mostrarCantArchivosUser(us);
+        }   
     }else if(opcion == 3){
         int edad = obtenerEdadPorNombre(nombreUsuario);
         if(edad > 18){
@@ -712,18 +788,21 @@ void atributosUnicos(){
         cin >> opcionNave;
         
         if (opcionNave == 1){
-            Navegador nave = obtenerNavegadorPorIndice();
+            Navegador* nave = obtenerNavegadorPorIndice();
             string nombrePag;
             cout << "Ingrese el nombre de la pagina que desea agregar: " << endl;
             cin >> nombrePag;
-            nave.agregarPagina(nombrePag);
+            nave -> agregarPagina(nombrePag);
             cout << nombrePag << " Agregado exitosamente" << endl;
         
         }else if(opcionNave == 2){
+            Navegador* nave = obtenerNavegadorPorIndice();
+            nave -> borrarHistorial();
             
+            cout << "Historial de " << nave -> getNombre() << " Eliminado exitosamente" << endl;
         }else if(opcionNave == 3){
             for(auto& nave: navegador){
-                nave.mostrarHistorial();
+                nave.mostrarSoloHistorial();
             }
         }
             
@@ -755,12 +834,37 @@ void atributosUnicos(){
         }
         
     }else if(opcion == 6){
-        for(auto& soc : social){
-            soc.mostrarInformacion();
-        }
-        for(auto user : usuarios){
-            Usuario* us;
-            social[0].agregarUsuario(us);
+        int opcionSoc;
+        cout << "[1]Agregar un amigo" << endl;
+        cout << "[2]Eliminar un amigo" << endl;
+        cout << "[3]Mostrar los amigos" << endl;
+        cout << "[4]Salir" << endl;
+        cin >> opcionSoc;
+        
+        Usuario* us = obtenerUsuarioPorNombre(nombreUsuario);
+        
+        if(opcionSoc == 1){
+            Social* soc = obtenerSocialPorIndice();
+            Usuario* amigo = obtenerUsuarioPorIndice();
+            
+            soc -> agregarAmigo(us,amigo);
+            
+            cout << amigo -> getNombre() << " Agregado exitosamente" << endl;
+        }else if(opcionSoc == 2){
+            Social* soc = obtenerSocialPorIndice();
+    
+            soc -> mostrarAmigos();
+            
+            string nombreAm = ingresoEliminarAmigo();
+            Usuario* amigo = obtenerUsuarioPorNombre(nombreAm);
+            
+            soc -> eliminarAmigo(us,amigo);
+            
+            cout << amigo -> getNombre() << " Eliminado exitosamente" << endl;
+            
+        }else if(opcionSoc == 3){
+            Social* soc = obtenerSocialPorIndice();
+            soc -> mostrarAmigos();
         }
         
         

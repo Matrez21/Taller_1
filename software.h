@@ -69,6 +69,10 @@ virtual void mostrarUsuarios() const {
     }
 }
 
+virtual void mostrarNombre() const {
+    cout << "Nombre: " << nombre << endl;
+}
+
 Usuario* encontrarUsuarioPorNombre(string& nombreUsuario) {
     for (auto& usuario : listaUsuarios) {
         if (usuario->getNombre() == nombreUsuario) {
