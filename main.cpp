@@ -1,3 +1,5 @@
+//Matias Araya Alvarez ICCI
+
 #include <iostream>
 #include "usuario.h"
 #include "juegos.h"
