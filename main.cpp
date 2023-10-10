@@ -392,9 +392,6 @@ void eliminarNavegadorPorIndice(int indice) {
     }
 }
 
-void agregarPaginaNavegadorPorIndice(int indice){
-    
-}
 
 void eliminarSeguridadPorIndice(int indice) {
     if (indice >= 0 && indice < seguridad.size()) {
@@ -724,11 +721,11 @@ void atributosUnicos(){
     }else if(opcion == 2){
 
         int opcionOfim;
-        cout << "[1]Añadir Archivos" << endl;
+        cout << "[1]Anadir Archivos" << endl;
         cout << "[2]Borrar Archivos" << endl;
         cout << "[3]Mostrar Cantidad de Archivos" << endl;
         cout << "[4]Salir" << endl;
-        cout << "Desea añadir archivos?: " << endl;
+        cout << "Desea anadir archivos?: " << endl;
         cin >> opcionOfim;
         
         Usuario* us = obtenerUsuarioPorNombre(nombreUsuario);
@@ -814,7 +811,7 @@ void atributosUnicos(){
         if(verifAdmin){
             int opcionMal;
             Seguridad::mostrarMalwaresUnicos();
-            cout << "[1]Añadir Malware" << endl;
+            cout << "[1]Anadir Malware" << endl;
             cout << "[2]Eliminar Malware" << endl;
             cout << "[3]Salir" << endl;
             cout << "Seleccione una opcion: " << endl;
