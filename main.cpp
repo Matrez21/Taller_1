@@ -19,7 +19,7 @@ vector<Social> social;
 vector<string> Juegos::generosUnicos;
 vector<string> Produccion::solucionUnicas;
 vector<string> Seguridad::malwareUnico;
-string nombreUsuario, contraseña;
+string nombreUsuario, contrasena;
 
 
 void agregarUserSoftware(){
